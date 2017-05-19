@@ -36,12 +36,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
 
+RUN mkdir /opt/android
+RUN mkdir /opt/android/android-sdk-linux
 RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
 RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
 ENV ANDROID_HOME /opt/android/android-sdk-linux
 ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 RUN chmod -R 744 $ANDROID_HOME
-RUN /opt/android/android-sdk-linux/tools/android update sdk -u
+# RUN /opt/android/android-sdk-linux/tools/android update sdk -u
 
 VOLUME ["/opt/android/android-sdk-linux"]
 
