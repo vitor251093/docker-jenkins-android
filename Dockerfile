@@ -8,7 +8,10 @@ FROM ubuntu:16.10
 # File Author / Maintainer
 MAINTAINER VitorMM <vitor251093@gmail.com>
 
-# Add Android SDK
+# Thanks to mitchwongho, which created the base for that Dockerfile
+# https://github.com/mitchwongho/docker-jenkins-android
+
+# Installing Oracle Java 8 SDK
 RUN apt-get update
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | /usr/bin/debconf-set-selections
@@ -21,7 +24,8 @@ RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
 RUN apt-get install oracle-java8-installer -y
 RUN apt-get install oracle-java8-set-default -y
-ENV JAVA_HOME /usr/bin/java
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV PATH $JAVA_HOME/bin:$PATH
 
 
 
@@ -41,13 +45,21 @@ RUN chmod -R 744 $ANDROID_HOME
 
 VOLUME ["/opt/android/android-sdk-linux"]
 
+RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
+RUN /opt/android/android-sdk-linux/tools/android update sdk -u
+
+
 
 
 RUN apt-get install -y unzip
-ADD https://services.gradle.org/distributions/gradle-2.4-all.zip /opt/
-RUN unzip /opt/gradle-2.4-all.zip -d /opt/gradle
-ENV GRADLE_HOME /opt/gradle/gradle-2.4-all
+RUN wget --progress=dot:giga https://services.gradle.org/distributions/gradle-2.14.1-bin.zip
+RUN unzip gradle-2.14.1-bin.zip -d /opt/gradle
+ENV GRADLE_HOME /opt/gradle/gradle-2.14.1
 ENV PATH $GRADLE_HOME/bin:$PATH
+
+
+
 
 # Add git
 RUN apt-get install -y git-core
@@ -67,3 +79,22 @@ VOLUME ["/var/lib/jenkins"]
 USER jenkins
 ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 ## END
+
+
+
+# Installing dependencies
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "tools"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "emulator"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platforms;android-23"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platform-tools"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "build-tools;23.0.3"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.3"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;default;x86_64"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;x86"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;x86_64"
+
+
+
+# Creating AVD
+RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
