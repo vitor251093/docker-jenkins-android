@@ -19,6 +19,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | /usr/bin/debc
 
 RUN apt-get update
 RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
+RUN apt-get install -y unzip
 
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
@@ -52,7 +53,6 @@ RUN /opt/android/android-sdk-linux/tools/android update sdk -u
 
 
 
-RUN apt-get install -y unzip
 RUN wget --progress=dot:giga https://services.gradle.org/distributions/gradle-2.14.1-bin.zip
 RUN unzip gradle-2.14.1-bin.zip -d /opt/gradle
 ENV GRADLE_HOME /opt/gradle/gradle-2.14.1
