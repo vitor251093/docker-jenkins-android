@@ -19,7 +19,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | /usr/bin/debc
 
 RUN apt-get update
 RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
-RUN apt-get install -y unzip
+RUN apt-get install unzip -y
 
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
