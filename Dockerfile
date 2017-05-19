@@ -4,7 +4,7 @@
 #######################################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:16.10
+FROM ubuntu
 # File Author / Maintainer
 MAINTAINER VitorMM <vitor251093@gmail.com>
 
