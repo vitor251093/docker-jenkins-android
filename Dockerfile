@@ -43,7 +43,6 @@ RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
 ENV ANDROID_HOME /opt/android/android-sdk-linux
 ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 RUN chmod -R 744 $ANDROID_HOME
-# RUN /opt/android/android-sdk-linux/tools/android update sdk -u
 
 VOLUME ["/opt/android/android-sdk-linux"]
 
@@ -81,6 +80,9 @@ ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 
 
 # Installing dependencies
+RUN mkdir /opt/android/android-sdk-linux/licenses/
+RUN /bin/sh -c "echo -e \"\n8933bad161af4178b1185d1a37fbf41ea5269c55\" > /opt/android/android-sdk-linux/licenses/android-sdk-license"
+RUN /bin/sh -c "echo -e \"\n84831b9409646a918e30573bab4c9c91346d8abd\" > /opt/android/android-sdk-linux/licenses/android-sdk-preview-license"
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "tools"
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "emulator"
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platforms;android-23"
