@@ -83,23 +83,23 @@ ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 ## Bug fix to the accept license bug
 ## Reference: https://stackoverflow.com/questions/38096225/automatically-accept-all-sdk-licences/38381577#38381577
 RUN mkdir -p $ANDROID_HOME/licenses/
-RUN /bin/sh -c "echo -e \"\n8933bad161af4178b1185d1a37fbf41ea5269c55\" > $ANDROID_HOME/licenses/android-sdk-license"
-RUN /bin/sh -c "echo -e \"\n84831b9409646a918e30573bab4c9c91346d8abd\" > $ANDROID_HOME/licenses/android-sdk-preview-license"
+RUN /bin/sh -c "echo -e \"\n8933bad161af4178b1185d1a37fbf41ea5269c55\" > /opt/android/android-sdk-linux/licenses/android-sdk-license"
+RUN /bin/sh -c "echo -e \"\n84831b9409646a918e30573bab4c9c91346d8abd\" > /opt/android/android-sdk-linux/licenses/android-sdk-preview-license"
 
 ## Dependencies installation
-RUN $ANDROID_HOME/tools/bin/sdkmanager "tools"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "emulator"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-23"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "platform-tools"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;23.0.3"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "build-tools;25.0.3"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-23;default;x86_64"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-23;google_apis;x86"
-RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-23;google_apis;x86_64"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "tools"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "emulator"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platforms;android-23"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platform-tools"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "build-tools;23.0.3"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.3"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;default;x86_64"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;x86"
+RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-23;google_apis;x86_64"
 
 
 
 # Creating AVD
 RUN apt-get install qt5-default -y
-RUN $ANDROID_HOME/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
+RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
