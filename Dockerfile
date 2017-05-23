@@ -41,10 +41,9 @@ RUN mkdir /opt/android/android-sdk-linux
 RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
 RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
 ENV ANDROID_HOME /opt/android/android-sdk-linux
-ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH
+ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+ENV LD_LIBRARY_PATH $ANDROID_HOME/emulator/lib64/qt/lib
 RUN chmod -R 744 $ANDROID_HOME
-
-VOLUME ["/opt/android/android-sdk-linux"]
 
 
 
@@ -101,5 +100,4 @@ RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-2
 
 
 # Creating AVD
-RUN apt-get install qt5-default -y
 RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
