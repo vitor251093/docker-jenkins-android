@@ -82,7 +82,7 @@ ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 # Installing dependencies
 ## Bug fix to the accept license bug
 ## Reference: https://stackoverflow.com/questions/38096225/automatically-accept-all-sdk-licences/38381577#38381577
-RUN mkdir -p $ANDROID_HOME/licenses/
+RUN mkdir -p /opt/android/android-sdk-linux/licenses/
 RUN /bin/sh -c "echo -e \"\n8933bad161af4178b1185d1a37fbf41ea5269c55\" > /opt/android/android-sdk-linux/licenses/android-sdk-license"
 RUN /bin/sh -c "echo -e \"\n84831b9409646a918e30573bab4c9c91346d8abd\" > /opt/android/android-sdk-linux/licenses/android-sdk-preview-license"
 
