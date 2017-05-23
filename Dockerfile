@@ -18,7 +18,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | /usr/bin/de
 RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | /usr/bin/debconf-set-selections
 
 RUN apt-get update
-RUN apt-get install unzip wget tmux build-essential software-properties-common python-software-properties libqt5widgets5 -y
+RUN apt-get install unzip wget tmux build-essential software-properties-common python-software-properties -y
 
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
@@ -101,4 +101,5 @@ RUN $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-23;google_apis;x86
 
 
 # Creating AVD
+RUN apt-get install qt5-default -y
 RUN $ANDROID_HOME/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
