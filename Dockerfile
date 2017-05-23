@@ -41,7 +41,7 @@ RUN mkdir /opt/android/android-sdk-linux
 RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
 RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
 ENV ANDROID_HOME /opt/android/android-sdk-linux
-ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH
 RUN chmod -R 744 $ANDROID_HOME
 
 VOLUME ["/opt/android/android-sdk-linux"]
