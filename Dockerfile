@@ -57,11 +57,11 @@ EXPOSE 8080 48429
 VOLUME ["/var/lib/jenkins"]
 USER jenkins
 ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
-## END
 
 
 
 # Install Android SDK
+USER root
 RUN apt-get update
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
@@ -76,9 +76,6 @@ ENV LD_LIBRARY_PATH $ANDROID_HOME/emulator/lib64/gles_mesa:$ANDROID_HOME/emulato
 RUN chmod -R 755 $ANDROID_HOME
 
 
-
-# From here on, is good to be root
-USER root
 
 # Accepting dependencies licenses
 RUN mkdir -p /opt/android/android-sdk-linux/licenses/
