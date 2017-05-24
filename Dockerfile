@@ -78,6 +78,9 @@ ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 
 
 
+# From here on, is good to be root
+USER root
+
 # Installing dependencies
 ## Bug fix to the accept license bug
 ## Reference: https://stackoverflow.com/questions/38096225/automatically-accept-all-sdk-licences/38381577#38381577
