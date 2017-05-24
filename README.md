@@ -3,7 +3,7 @@ A Jenkins CI Docker Container for Android
 
 Running Docker:
 ```
-docker run -d -u=root -p 8080:8080 --name jenkins-ci-android <container-image-name>
+docker run --privileged -d -u=root -p 8080:8080 --name jenkins-ci-android <container-image-name>
 ```
 
 Running emulator:
