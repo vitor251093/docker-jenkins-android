@@ -100,5 +100,5 @@ RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "system-images;android-2
 
 
 # Creating AVD
-RUN apt-get install libx11-dev libxdamage-dev -y
+RUN apt-get install libx11-dev libxdamage-dev cpu-checker qemu-kvm -y
 RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API23 -k "system-images;android-23;google_apis;x86" --tag "google_apis" --device "Nexus 5"
