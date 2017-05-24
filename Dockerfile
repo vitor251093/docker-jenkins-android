@@ -18,7 +18,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | /usr/bin/de
 RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | /usr/bin/debconf-set-selections
 
 RUN apt-get update
-RUN apt-get install unzip wget tmux build-essential software-properties-common python-software-properties -y
+RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
 
 RUN add-apt-repository ppa:webupd8team/java
 RUN apt-get update
@@ -29,26 +29,8 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 
 
-# Add Android SDK
-RUN apt-get update
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update
-RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
-
-RUN mkdir /opt/android
-RUN mkdir /opt/android/android-sdk-linux
-RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
-RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
-ENV ANDROID_HOME /opt/android/android-sdk-linux
-ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
-ENV LD_LIBRARY_PATH $ANDROID_HOME/emulator/lib64/gles_mesa:$ANDROID_HOME/emulator/lib64/qt/lib
-RUN chmod -R 744 $ANDROID_HOME
-
-
-
-
-
+# Install Gradle
+RUN apt-get install unzip -y
 RUN wget --progress=dot:giga https://services.gradle.org/distributions/gradle-2.14.1-bin.zip
 RUN unzip gradle-2.14.1-bin.zip -d /opt/gradle
 ENV GRADLE_HOME /opt/gradle/gradle-2.14.1
@@ -56,11 +38,12 @@ ENV PATH $GRADLE_HOME/bin:$PATH
 
 
 
-
-# Add git
+# Install git
 RUN apt-get install -y git-core
 
-# Add Jenkins
+
+
+# Install Jenkins
 # Thanks to orchardup/jenkins Dockerfile
 RUN wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 RUN echo "deb http://pkg.jenkins-ci.org/debian-stable binary/" >> /etc/apt/sources.list
@@ -78,17 +61,32 @@ ENTRYPOINT [ "java","-jar","/usr/share/jenkins/jenkins.war" ]
 
 
 
+# Install Android SDK
+RUN apt-get update
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
+RUN mkdir /opt/android
+RUN mkdir /opt/android/android-sdk-linux
+RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
+ENV ANDROID_HOME /opt/android/android-sdk-linux
+ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+ENV LD_LIBRARY_PATH $ANDROID_HOME/emulator/lib64/gles_mesa:$ANDROID_HOME/emulator/lib64/qt/lib
+RUN chmod -R 755 $ANDROID_HOME
+
+
+
 # From here on, is good to be root
 USER root
 
-# Installing dependencies
-## Bug fix to the accept license bug
-## Reference: https://stackoverflow.com/questions/38096225/automatically-accept-all-sdk-licences/38381577#38381577
+# Accepting dependencies licenses
 RUN mkdir -p /opt/android/android-sdk-linux/licenses/
 RUN /bin/sh -c "echo -e \"\n8933bad161af4178b1185d1a37fbf41ea5269c55\" > /opt/android/android-sdk-linux/licenses/android-sdk-license"
 RUN /bin/sh -c "echo -e \"\n84831b9409646a918e30573bab4c9c91346d8abd\" > /opt/android/android-sdk-linux/licenses/android-sdk-preview-license"
+## Reference: https://stackoverflow.com/questions/38096225/automatically-accept-all-sdk-licences/38381577#38381577
 
-## Dependencies installation
+# Installing dependencies
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "tools"
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "emulator"
 RUN /opt/android/android-sdk-linux/tools/bin/sdkmanager "platforms;android-23"
