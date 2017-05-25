@@ -113,3 +113,7 @@ ENV SHELL /bin/bash
 # https://issues.jenkins-ci.org/browse/JENKINS-44490
 # https://issues.jenkins-ci.org/browse/JENKINS-43557
 # https://issues.jenkins-ci.org/browse/JENKINS-40178
+
+
+# In case of 'SDL init failure' check:
+# http://hanscappelle.blogspot.com.br/2013/01/jenkins-android-emulator-plugin-problems.html
