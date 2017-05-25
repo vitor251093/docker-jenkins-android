@@ -68,8 +68,8 @@ RUN apt-get update
 RUN apt-get install wget tmux build-essential software-properties-common python-software-properties -y
 RUN mkdir /opt/android
 RUN mkdir /opt/android/android-sdk-linux
-RUN wget --progress=dot:giga https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
-RUN unzip -o sdk-tools-linux-3859397.zip -d /opt/android/android-sdk-linux
+RUN wget --progress=dot:giga $(wget --quiet -O - http://developer.android.com/sdk/index.html | grep -o -E https://dl\.google\.com/android/repository/sdk-tools-linux-[0-9]+\.zip | head -1)
+RUN unzip -o $(ls | grep -o -E sdk-tools-linux-[0-9]+\.zip | head -1) -d /opt/android/android-sdk-linux
 ENV ANDROID_HOME /opt/android/android-sdk-linux
 ENV PATH $ANDROID_HOME/tools:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
 ENV LD_LIBRARY_PATH $ANDROID_HOME/emulator/lib64/gles_mesa:$ANDROID_HOME/emulator/lib64/qt/lib
