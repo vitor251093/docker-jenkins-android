@@ -8,6 +8,6 @@ docker run --privileged -d -u=root -p 8080:8080 --name jenkins-ci-android <conta
 
 Running emulator:
 ```
-docker exec <container-id> /opt/android/android-sdk-linux/emulator/emulator64-x86 -engine classic -ports 5772,5773 -report-console tcp:5869,max=60 -avd Nexus5_API23 -no-snapshot-load -no-snapshot-save -no-window -verbose
+docker exec <container-id> /opt/android/android-sdk-linux/tools/emulator -engine auto -ports 5772,5773 -report-console tcp:5869,max=60 -avd Nexus5_API23 -no-snapshot-load -no-snapshot-save -no-window -verbose
 ```
 
