@@ -104,4 +104,5 @@ RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API
 
 
 # Installing emulator dependencies
-RUN apt-get install libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1
+RUN apt-get install libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 -y
+ENV SHELL /bin/bash
