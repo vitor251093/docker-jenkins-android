@@ -106,3 +106,10 @@ RUN /opt/android/android-sdk-linux/tools/bin/avdmanager create avd -n Nexus5_API
 # Installing emulator dependencies
 RUN apt-get install libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 -y
 ENV SHELL /bin/bash
+
+
+
+# It still isn't possible to use Jenkins's android-emulator-plugin with QEMU2, and the classic engine doesn't work anymore
+# https://issues.jenkins-ci.org/browse/JENKINS-44490
+# https://issues.jenkins-ci.org/browse/JENKINS-43557
+# https://issues.jenkins-ci.org/browse/JENKINS-40178
