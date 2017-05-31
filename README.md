@@ -7,7 +7,7 @@ That Dockerfile is still in development. It still isn't possible to use Jenkins'
 * https://issues.jenkins-ci.org/browse/JENKINS-43557
 * https://issues.jenkins-ci.org/browse/JENKINS-40178
 
-It's still unclear if that Dockerfile works for non-Jenkins tests using the `emulator` binary, but it runs.
+However, that Dockerfile works for non-Jenkins tests using `gradle` binary.
 
 In case of 'SDL init failure' check:
 * http://hanscappelle.blogspot.com.br/2013/01/jenkins-android-emulator-plugin-problems.html
@@ -28,3 +28,7 @@ Example of emulator command line:
 docker exec <container-id> /opt/android/android-sdk-linux/tools/emulator -engine auto -ports 5772,5773 -report-console tcp:5869,max=60 -avd Nexus5_API23 -no-snapshot-load -no-snapshot-save -no-window -verbose
 ```
 
+Running tests with gradle:
+```
+gradle test
+```
